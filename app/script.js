@@ -11,26 +11,22 @@ function evaluateDivisors(a, b, k){
     }
     
     var outputs = 0;
-    var primes = primesTo(b / 2);
+    
+    var primes = primesTo(b);
 
     for (let i = a + 1; i < b; i++) {
-        if (findDivisorsOf(i, k, primes) == k) {
+        var divisors = findDivisorsOf(i, k, primes);
+        if (divisors == k) {
             outputs++;
         }
     }
-    // console.log(findDivisorsOf(28, 3, primes));
     
     return outputs;
 }
 
 function findDivisorsOf(n, limit, primes) {
-    
 
     let factorisation = primeFactors(n, primes);
-    // console.log(factorisation)
-    if (factorisation === null) {
-        return 2;
-    }
 
     let sum = 1;
     let counts = {};
@@ -63,22 +59,21 @@ function arraysEqual(a1, a2) {
 
 function primeFactors(n, primes) {
     if (primes.includes(n)) {
-        return [n];
+        var nList = [n];
+        return nList;
     }
-
+    const limit = Math.sqrt(n);
     for (var i = 0; i < primes.length; i++) {
         prime = primes[i];
-        if (prime > Math.sqrt(n)) {
+        if (prime > limit) {
             break;
         }
         if (n % prime == 0) {
-            factor = primeFactors(Math.floor(n / prime), primes);
-            if (factor !== null) {
-                return [prime].concat(factor);
-            }
+            var primeList = [prime];
+            return primeList.concat(primeFactors(Math.floor(n / prime), primes));
         }
     }
-    return null;
+    throw "Failed to factorise";
 }
 
 function factorTree(number, path, primes) {
