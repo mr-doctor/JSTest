@@ -12,7 +12,7 @@ function evaluateDivisors(a, b, k){
     
     var outputs = 0;
     b = 102
-    var primes = primesTo(Math.sqrt(b));
+    var primes = primesTo(b / 2);
     console.log(b);
     console.log("primes: " + primes);
 
@@ -75,24 +75,30 @@ function primesTo(m) {
 }
 
 function isPrime(i, primes) {
-    var intSqrt = Math.floor(Math.sqrt(i));
+    if (i % 3 == 0) {
+        return false;
+    }
+    if (i == 3) {
+        return true;
+    }
 
+    var intSqrt = Math.floor(Math.sqrt(i));
+ 
     for (let j = 0; j < primes.length; j++) {
-        if (primes[j] > intSqrt) {
-            if (i == 2) {
-                return true;
-            }
-            for (let k = 3; k < Math.sqrt(i); k+=2) {
-                if (i % k == 0) {
-                    return false;
-                }
-            }
-        }
         if (i % primes[j] == 0) {
             return false;
-        } else {
-            return true;
         }
     }
+    var q = 5;
+    var p = 2; 
+
+    while (q * q <= i) {  
+        if (i % q == 0) {
+            return false;
+        } 
+        i += p;
+        p = 6 - p;
+    }
     return true;
+    
 }
