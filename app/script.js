@@ -11,12 +11,12 @@ function evaluateDivisors(a, b, k){
     }
     
     var outputs = 0;
-    b = 102
+    b = 106
     var primes = primesTo(b / 2);
     console.log(b);
     console.log("primes: " + primes);
 
-    console.log(factorTree(0, b, [], primes, []));
+    console.log(factorTree(b, [], primes, []));
 
     console.log(allPaths); 
 
@@ -24,13 +24,13 @@ function evaluateDivisors(a, b, k){
 }
 
 
-function factorTree(prime, number, path, primes, allPaths) {
+function factorTree(number, path, primes, allPaths) {
     const bound = Math.floor(Math.sqrt(number));
     // if we've reached the end of a branch in our factor tree, send the list back
     
     if (primes.includes(number)) {
         // add the final number
-        path.push(number);
+        path.push(number); 
         // add the complete path to all of our paths    
         allPaths.push(path);
         // send all of the paths back
@@ -56,7 +56,7 @@ function factorTree(prime, number, path, primes, allPaths) {
          
         // head down the tree using the new prime, the new number, 
         //      giving it the path, all of our primes, and all paths
-        allPaths.concat(...factorTree(primes[i], newNumber, [...path], primes, allPaths));
+        allPaths.concat(...factorTree(newNumber, [...path], primes, allPaths));
     }
     
     return allPaths; 
@@ -70,6 +70,7 @@ function primesTo(m) {
         if (isPrime(i, primes)) {
             primes.push(i);
         }
+        
     }
     return primes;
 }
@@ -81,10 +82,9 @@ function isPrime(i, primes) {
     if (i % 3 == 0) {
         return false;
     }
-
-    var intSqrt = Math.floor(Math.sqrt(i));
  
     for (let j = 0; j < primes.length; j++) {
+        var z = primes[j];
         if (i % primes[j] == 0) {
             return false;
         }
@@ -96,7 +96,7 @@ function isPrime(i, primes) {
         if (i % q == 0) {
             return false;
         } 
-        i += p;
+        q += p;
         p = 6 - p;
     }
     return true;
