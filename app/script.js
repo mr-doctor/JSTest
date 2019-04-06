@@ -11,16 +11,46 @@ function evaluateDivisors(a, b, k){
     }
     
     var outputs = 0;
-    b = 24
+    b = 24;
     var primes = primesTo(b / 2);
 
-    console.log(factorTree(b, [], primes, []));
+    let allPaths = factorTree(b, [], primes);
+
+    let exponents = [];
+
+    for (let i = 0; i < allPaths.length; i++) {
+        for (let j = allPaths.length - 1; j >= allPaths.length; j--) {
+            if (i == j) {
+                continue;
+            }
+            if (arraysEqual(allPaths[i], allPaths[j])) {
+                allPaths.splice(j, 1);
+            }
+        }
+        
+        
+    }
+
+    console.log(allPaths);
 
     return outputs;
 }
 
-function factorTree(number, path, primes, allPaths) {
-    console.log(path);
+function arraysEqual(a1, a2) {
+
+    var a1p = a1.concat().sort();
+    var a2p = a2.concat().sort();
+
+    for (let i = 0; i < a1p.length; i++) {
+        if (a1p[i] !== a2p[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function factorTree(number, path, primes) {
+    console.log('factoring', number, 'have', path);
 
     const bound = Math.floor(Math.sqrt(number));
 
@@ -28,12 +58,12 @@ function factorTree(number, path, primes, allPaths) {
     if (primes.includes(number)) {
         // add the final number
         path.push(number); 
-        // add the complete path to all of our paths    
-        allPaths.push([...path]);
-        // send all of the paths back
-        return allPaths;
-    }
 
+        console.log('found node', path);
+        // send all of the paths back
+        return [path];
+    }
+    let allPaths = [];
     // attempt to divide down by each prime
     for (let i = 0; i < primes.length; i++) {
         // we can't go over our bound
@@ -46,16 +76,22 @@ function factorTree(number, path, primes, allPaths) {
         }
         
         // we haven't reached the end yet, so add the original prime
-        path.push(primes[i]);
+        let newPath = [...path];
+        newPath.push(primes[i]);
+        console.log('adding', primes[i]);
         
         // calculate the new second number we're using
         let newNumber = number / primes[i];
          
         // head down the tree using the new prime, the new number, 
         //      giving it the path, all of our primes, and all paths
-        allPaths.concat(...factorTree(newNumber, [...path], primes, allPaths));
+        let foundPaths = factorTree(newNumber, newPath, primes);
+        console.log('found', foundPaths);
+        allPaths = allPaths.concat(foundPaths);
+        console.log(number, 'now have', allPaths)
     }
     
+    console.log(number, 'has', allPaths);
     return allPaths; 
 }
 
@@ -69,33 +105,20 @@ function primesTo(m) {
         }
         
     }
+    console.log(primes);
     return primes;
 }
 
 function isPrime(i, primes) {
-    if (i == 3) {
-        return true;
-    }
-    if (i % 3 == 0) {
-        return false;
-    }
- 
+    let isqrt = Math.floor(Math.sqrt(i));
     for (let j = 0; j < primes.length; j++) {
         var z = primes[j];
-        if (i % primes[j] == 0) {
+        if (z > isqrt) {
+            break;
+        }
+        if (i % z == 0) {
             return false;
         }
     }
-    var q = 5;
-    var p = 2; 
-
-    while (q * q <= i) {  
-        if (i % q == 0) {
-            return false;
-        } 
-        q += p;
-        p = 6 - p;
-    }
-    return true;
-    
+    return true; 
 }
