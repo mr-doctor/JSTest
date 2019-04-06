@@ -11,28 +11,25 @@ function evaluateDivisors(a, b, k){
     }
     
     var outputs = 0;
-    b = 106
+    b = 24
     var primes = primesTo(b / 2);
-    console.log(b);
-    console.log("primes: " + primes);
 
     console.log(factorTree(b, [], primes, []));
-
-    console.log(allPaths); 
 
     return outputs;
 }
 
-
 function factorTree(number, path, primes, allPaths) {
+    console.log(path);
+
     const bound = Math.floor(Math.sqrt(number));
+
     // if we've reached the end of a branch in our factor tree, send the list back
-    
     if (primes.includes(number)) {
         // add the final number
         path.push(number); 
         // add the complete path to all of our paths    
-        allPaths.push(path);
+        allPaths.push([...path]);
         // send all of the paths back
         return allPaths;
     }
@@ -47,8 +44,8 @@ function factorTree(number, path, primes, allPaths) {
         if (number % primes[i] != 0) {
             continue;
         }
-        // we haven't reached the end yet, so add the original prime
         
+        // we haven't reached the end yet, so add the original prime
         path.push(primes[i]);
         
         // calculate the new second number we're using
