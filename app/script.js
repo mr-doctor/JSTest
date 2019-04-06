@@ -11,38 +11,30 @@ function evaluateDivisors(a, b, k){
     }
     
     var outputs = 0;
+    var primes = primesTo(b / 2);
 
     for (let i = a + 1; i < b; i++) {
-        if (findDivisorsOf(i, k) == k) {
+        if (findDivisorsOf(i, k, primes) == k) {
             outputs++;
         }
     }
+    // console.log(findDivisorsOf(28, 3, primes));
     
     return outputs;
 }
 
-function findDivisorsOf(n, limit) {
-    var primes = primesTo(n / 2);
+function findDivisorsOf(n, limit, primes) {
+    
 
-    let allPaths = factorTree(n, [], primes);
-
-    let allFactors = [];
-
-    for (let i = 0; i < allPaths.length; i++) {
-        for (let j = allPaths.length - 1; j >= 0; j--) {
-            if (i == j) {
-                continue;
-            }
-            if (arraysEqual(allPaths[i], allPaths[j])) {
-                allPaths.splice(j, 1);
-            }
-        }
-        allFactors = allFactors.concat(allPaths[i]);
+    let factorisation = primeFactors(n, primes);
+    // console.log(factorisation)
+    if (factorisation === null) {
+        return 2;
     }
 
     let sum = 1;
     let counts = {};
-    allFactors.forEach(function(x) {
+    factorisation.forEach(function(x) {
         counts[x] = (counts[x] || 0) + 1;
     });
     for (var key in counts) {
@@ -67,6 +59,26 @@ function arraysEqual(a1, a2) {
         }
     }
     return true;
+}
+
+function primeFactors(n, primes) {
+    if (primes.includes(n)) {
+        return [n];
+    }
+
+    for (var i = 0; i < primes.length; i++) {
+        prime = primes[i];
+        if (prime > Math.sqrt(n)) {
+            break;
+        }
+        if (n % prime == 0) {
+            factor = primeFactors(Math.floor(n / prime), primes);
+            if (factor !== null) {
+                return [prime].concat(factor);
+            }
+        }
+    }
+    return null;
 }
 
 function factorTree(number, path, primes) {
