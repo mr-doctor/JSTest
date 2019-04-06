@@ -75,11 +75,11 @@ function primesTo(m) {
 }
 
 function isPrime(i, primes) {
-    if (i % 3 == 0) {
-        return false;
-    }
     if (i == 3) {
         return true;
+    }
+    if (i % 3 == 0) {
+        return false;
     }
 
     var intSqrt = Math.floor(Math.sqrt(i));
