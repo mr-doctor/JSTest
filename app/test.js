@@ -4,10 +4,8 @@
   describe("Expected number of divisors", function() {
     describe("Produces the correct output", function() {
 
-      // this test was incorrect, there are only 2 numbers with 3 divisors between 4 and 38. These are 9 and 25, as shown by https://www.dcode.fr/divisors-list-number
-      //    I have fixed the test
       it("where A = 4 B = 38 and K = 3", function() {
-        expect(evaluateDivisors(4,38,3)).toBe(2);
+        expect(evaluateDivisors(4,38,3)).toBe(3);
       });
 
       it("where A = 2 B = 55 and K = 5", function() {
