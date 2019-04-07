@@ -1,5 +1,5 @@
 var cacheFactors = new Map();
-// var factors = new Map();
+var factors = new Map();
 
 function evaluateDivisors(a, b, k){
     if (k < 0)
@@ -33,6 +33,7 @@ function evaluateDivisors(a, b, k){
     return outputs;
 }
 
+
 var gcd = function(a, b) {
     if ( ! b) {
         return a;
@@ -51,6 +52,10 @@ function g(a) {
 
 function abs(a) {
     return (a > 0) ? a : -a;
+}
+
+function f2(x, n) {
+    return (x * x + 3) % n;
 }
 
 function pollardRho(n, func) {

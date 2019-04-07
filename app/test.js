@@ -29,7 +29,7 @@
       });
 
       //only un-x this spec if the specs suite is running in less than a second
-      xit("Handles a range of 1 billion where A = 1232 B = 1000001232 and K = 9", function() {
+      it("Handles a range of 1 billion where A = 1232 B = 1000001232 and K = 9", function() {
         expect(evaluateDivisors(1232,1000001232,9)).toBe(7807);
       });
 
