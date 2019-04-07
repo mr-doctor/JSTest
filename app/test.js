@@ -10,21 +10,21 @@
         expect(evaluateDivisors(4,38,3)).toBe(2);
       });
 
-      xit("where A = 2 B = 55 and K = 5", function() {
+      it("where A = 2 B = 55 and K = 5", function() {
         expect(evaluateDivisors(2,55,5)).toBe(1);
       });
 
-      xit("where A = 42 B = 264 and K = 9", function() {
+      it("where A = 42 B = 264 and K = 9", function() {
         expect(evaluateDivisors(42,264,9)).toBe(4);
       });
 
-      xit("where A = 114 B = 503 and K = 15", function() {
+      it("where A = 114 B = 503 and K = 15", function() {
         expect(evaluateDivisors(114,503,15)).toBe(3);
       });
 
     });
     describe("Handles larger ranges,", function() {
-      xit("Handles a range of 25k where A = 1103 B = 26103 and K = 21", function() {
+      it("Handles a range of 25k where A = 1103 B = 26103 and K = 21", function() {
         expect(evaluateDivisors(1103,26103,21)).toBe(8);
       });
 
