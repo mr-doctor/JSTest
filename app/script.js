@@ -16,13 +16,15 @@ function evaluateDivisors(a, b, k){
     cacheFactors = new Map();
     
     let outputs = 0;
-    
+
+     
     // Seive of Eratosthenes
-    let primes = sievePrimes(b);
+     let primes = [];//sievePrimes(b);
 
     for (let i = a + 1; i < b; i++) {
         let divisors = 0;
         divisors = findDivisorsOf(i, k, primes);
+        
         if (divisors == k) {
             outputs++; 
         }
@@ -33,8 +35,8 @@ function evaluateDivisors(a, b, k){
 
 function findDivisorsOf(n, limit, primes) {
 
-    let factorisation = primeFactors(n, primes);
-
+    let factorisation = primeFactorisation(n);//primeFactors(n, primes);
+    
     let sum = 1;
     let counts = {};
     factorisation.forEach(function(x) {
@@ -59,7 +61,7 @@ function primeFactors(n, primes) {
         return cacheFactors.get(n);
     }
 
-    // Either this has reached the end of a recusion branch in the tree, or the original input was prime
+    // Either this has reached the end of a recursion branch in the tree, or the original input was prime
     if (primes.includes(n)) {
         let nList = [n];
         return nList;
@@ -111,4 +113,30 @@ function sievePrimes(m) {
         }
     }
     return primes;
+}
+
+function primeFactorisation(n, output, originalN) {
+    var output = (output || []);
+    var root = Math.sqrt(n);
+    var x = 2;
+
+    if (n % x) {
+        x = 3;
+
+        while ((n % x)) {
+            x += 2;
+            if (x >= root) {
+                break;
+            }
+        }
+    }
+
+    x = (x <= root) ? x : n;
+    output.push(x);
+    if (x === n) {
+        
+        return output;
+    } else {
+        return primeFactorisation((n / x), output, originalN);
+    }
 }
